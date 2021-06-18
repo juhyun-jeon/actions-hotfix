@@ -1,0 +1,21 @@
+
+name: hotfix cherry-pick
+ 
+on:
+  push:
+    branches: [ prod ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: make new branch from main
+        env:
+          PR_BRANCH: "auto-main-${GITHUB_SHA}"
+        run: |
+          git remote update
+          git fetch --all
+          git checkout -b "$PR_BRANCH" origin/main
+          git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
+          git push -u origin "PR_BRANCH"
