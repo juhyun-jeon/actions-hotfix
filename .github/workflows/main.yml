@@ -14,6 +14,8 @@ jobs:
         env:
           PR_BRANCH: "auto-main-${GITHUB_SHA}"
         run: |
+          git config --global user.email "$GITBOT_EMAIL"
+          git config --global user.name "$GITHUB_ACTOR"
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH" origin/main
