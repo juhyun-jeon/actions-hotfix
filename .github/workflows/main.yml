@@ -18,4 +18,4 @@ jobs:
           git fetch --all
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
-          git push -u origin "PR_BRANCH"
+          git push -u origin "$PR_BRANCH"
