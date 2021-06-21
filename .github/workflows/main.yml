@@ -25,5 +25,5 @@ jobs:
         env:
           PR_BRANCH: auto-main-${{github.sha}}
         run : |
-          git checkout master
+          git checkout main
           git merge --squash "$PR_BRANCH"
