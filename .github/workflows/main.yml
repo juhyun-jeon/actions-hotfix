@@ -1,9 +1,8 @@
-
 name: hotfix cherry-pick
- 
+
 on:
   push:
-    branches: [ prod ]
+    branches: [prod]
 
 jobs:
   build:
@@ -24,7 +23,7 @@ jobs:
       - name: merge new branch in main
         env:
           PR_BRANCH: origin/auto-main-${{github.sha}}
-        run : |
-          git checkout main
+        run: |
+          git checkout origin/main
           git merge --squash "$PR_BRANCH"
           git push -u origin main
