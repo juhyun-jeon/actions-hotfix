@@ -27,3 +27,4 @@ jobs:
         run : |
           git checkout main
           git merge --squash "$PR_BRANCH"
+          git push -u origin main
