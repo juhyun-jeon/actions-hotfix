@@ -24,6 +24,6 @@ jobs:
         env:
           PR_BRANCH: origin/auto-main-${{github.sha}}
         run: |
-          git checkout origin/main
+          git checkout main
           git merge --squash "$PR_BRANCH"
           git push -u origin main
