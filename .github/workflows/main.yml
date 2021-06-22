@@ -21,8 +21,9 @@ jobs:
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
       - name: create pull request
+        uses: peter-evans/create-pull-request@v3
         env:
           PR_BRANCH: auto-main-${{github.sha}}
-          PR_TITLE: $(git log -1 --format="%s" ${{github.sha}})
-        run: hub pull-request -b main -h $PR_BRANCH -l -a $GITHUB_ACTOR -m "\"AUTO:$PR_TITLE\""
-    
+        with:
+          base: main
+          branch: $PR_BRANCH
