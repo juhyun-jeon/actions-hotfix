@@ -20,10 +20,8 @@ jobs:
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
+          git checkout origin/main
       - name: create pull request
         uses: peter-evans/create-pull-request@v3
-        env:
-          PR_BRANCH: auto-main-${{github.sha}}
         with:
-          base: main
-          branch: $PR_BRANCH
+          branch: origin/auto-main-${{github.sha}}
