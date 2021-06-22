@@ -18,7 +18,7 @@ jobs:
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH" origin/main
-          git cherry-pick --strategy-option=ours "$GITHUB_SHA"
+          git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
       - name: merge new branch in main
         env:
