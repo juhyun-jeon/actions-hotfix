@@ -28,3 +28,8 @@ jobs:
           git merge "origin/$PR_BRANCH"
           git push origin main
           git push origin --delete $PR_BRANCH
+      - name: create pull request
+        env:
+          PR_BRANCH: auto-main-${{github.sha}}
+        run: hub pull-request -b main -h $PR_BRANCH -l -a "${GITHUB_ACTOR}" -m "AUTO"
+    
