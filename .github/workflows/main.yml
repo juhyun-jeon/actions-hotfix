@@ -20,16 +20,9 @@ jobs:
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
-      - name: merge new branch in main
-        env:
-          PR_BRANCH: auto-main-${{github.sha}}
-        run: |
-          git checkout main
-          git merge "origin/$PR_BRANCH"
-          git push origin main
-          git push origin --delete $PR_BRANCH
       - name: create pull request
         env:
           PR_BRANCH: auto-main-${{github.sha}}
-        run: hub pull-request -b main -h $PR_BRANCH -l -a "${GITHUB_ACTOR}" -m "AUTO"
+          PR_TITLE: $(git log -1 --format="%s" ${{github.sha}})
+        run: hub pull-request -b main -h $PR_BRANCH -l -a $GITHUB_ACTOR -m "\"AUTO:$PR_TITLE\""
     
