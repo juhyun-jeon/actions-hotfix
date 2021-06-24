@@ -27,7 +27,7 @@ jobs:
         env:
           PR_BRANCH: auto-main-${{github.sha}}
         with:
-          branch: $PR_BRANCH
+          branch: "$PR_BRANCH"
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
