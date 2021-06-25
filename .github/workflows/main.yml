@@ -22,13 +22,13 @@ jobs:
           git push -u origin "$PR_BRANCH"
       - name: Reset promotion branch
         run: |
-          git fetch origin ${{ env.PR_BRANCH }}:${{ env.PR_BRANCH }}
-          git reset --hard ${{ env.PR_BRANCH }}
+          git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
+          git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: ${{ env.PR_BRANCH }}
+          branch: auto-main-${{github.sha}}
           base: main
       - name: Check outputs
         run: |
