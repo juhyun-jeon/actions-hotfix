@@ -20,3 +20,17 @@ jobs:
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
+      - name: Reset promotion branch
+        run: |
+          git fetch origin main:main
+          git reset --hard main
+          git checkout main
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: auto-main-${{github.sha}}
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
