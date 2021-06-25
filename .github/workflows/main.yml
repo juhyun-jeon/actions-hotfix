@@ -12,7 +12,9 @@ jobs:
       - name: make new branch from main
         env:
           PR_BRANCH: auto-main-${{github.sha}}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
+          echo $COMMIT_MSG
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
           git remote update
