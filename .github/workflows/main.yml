@@ -22,7 +22,7 @@ jobs:
           git push -u origin "$PR_BRANCH"
       - name: Reset promotion branch
         run: |
-          git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
+          git fetch origin auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
         id: cpr
