@@ -29,7 +29,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: auto-main-${github.sha}
+          branch: auto-main-${{github.sha}}
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
