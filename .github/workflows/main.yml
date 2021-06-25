@@ -24,7 +24,7 @@ jobs:
         run: |
           git fetch origin main:main
           git reset --hard main
-          echo "github_sha - env.GITHUB_SHA"
+          git checkout main
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
