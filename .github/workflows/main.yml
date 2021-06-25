@@ -19,10 +19,7 @@ jobs:
           git fetch --all
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
-          git push -u origin "$PR_BRANCH"
-      - name: Reset promotion branch
-        run: |
-          git remote update
+          # git push -u origin "$PR_BRANCH"
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
