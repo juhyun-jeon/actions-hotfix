@@ -24,11 +24,12 @@ jobs:
         run: |
           git fetch origin main:main
           git reset --hard main
+          echo "github_sha - env.GITHUB_SHA"
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: ${{ format('auto-main-{0}', $GITHUB_SHA) }}
+          branch: ${{ format('auto-main-{0}', env.GITHUB_SHA) }}
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
