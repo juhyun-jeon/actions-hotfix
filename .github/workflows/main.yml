@@ -38,11 +38,12 @@ jobs:
           delete-branch: true
           title: ${{ github.event.head_commit.message }}
           body: |
-            This is auto created PR from Hotfix PR( `hotfix` -> `prod` )
-            This branch is **hotfix**, It's submitted to the `main` branch.
+            - This branch is **hotfix**, It's submitted to the `main` branch.
+            - This is auto created PR from Hotfix PR(submitted to the `prod` branch)
           labels: |
             Auto created
             Hotfix
+          assignees: ${{env.GITHUB_ACTOR}}
       - name: Check outputs
         if: steps.s1.conclusion == 'success'
         run: |
