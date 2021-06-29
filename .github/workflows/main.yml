@@ -12,7 +12,10 @@ jobs:
       - name: make new branch from main
         env:
           PR_BRANCH: auto-main-${{github.sha}}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        if: startsWith(${{ github.event.head_commit.message }}, 'fix')
         run: |
+          echo $COMMIT_MSG
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
           git remote update
@@ -20,17 +23,16 @@ jobs:
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
-      # - name: Reset promotion branch
-      #   run: |
-      #     git fetch origin main:main
-      #     git reset --hard main
-      #     git checkout main
+          git checkout main
+      - name: Reset promotion branch
+        run: |
+          git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
+          git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: auto-main-${{github.sha}}
-          base: main
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
