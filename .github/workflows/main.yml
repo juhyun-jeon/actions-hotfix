@@ -30,11 +30,13 @@ jobs:
           git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
+        if: failure()
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: auto-main-${{github.sha}}
       - name: Check outputs
+        if: failure()
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
