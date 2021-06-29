@@ -37,15 +37,8 @@ jobs:
           delete-branch: true
           title: ${{ github.event.head_commit.message }}
           body: |
-            **Auto created pull request**
-            - This branch is **hotfix**, It's submitted to the `main` branch.
-            - This is auto created PR from Hotfix PR(submitted to the `prod` branch)
+            - This `hotfix` branch is submitted to the `prod` branch
           labels: |
-            Auto created
+            Auto
             Hotfix
           assignees: ${{github.actor}}
-      - name: Check outputs
-        if: steps.s1.conclusion == 'success'
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
