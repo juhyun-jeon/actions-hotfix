@@ -39,7 +39,7 @@ jobs:
         with:
           branch: auto-main-${{github.sha}}
           delete-branch: true
-          title: ${{COMMIT_MSG}}
+          title: $COMMIT_MSG
       - name: Check outputs
         if: steps.s1.conclusion == 'success'
         run: |
