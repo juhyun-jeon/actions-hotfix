@@ -43,7 +43,7 @@ jobs:
           labels: |
             Auto created
             Hotfix
-          assignees: ${{env.GITHUB_ACTOR}}
+          assignees: ${{github.actor}}
       - name: Check outputs
         if: steps.s1.conclusion == 'success'
         run: |
