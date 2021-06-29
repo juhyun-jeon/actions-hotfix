@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: make new branch from main
+        id: s1
         env:
           PR_BRANCH: auto-main-${{github.sha}}
           COMMIT_MSG: ${{ github.event.head_commit.message }}
@@ -25,18 +26,18 @@ jobs:
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
-        if: ${{ cancelled() }}
+        if: steps.s1.conclusion == 'success'
         run: |
           git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
-        if: ${{ cancelled() }}
+        if: steps.s1.conclusion == 'success'
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: auto-main-${{github.sha}}
       - name: Check outputs
-        if: ${{ cancelled() }}
+        if: steps.s1.conclusion == 'success'
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
