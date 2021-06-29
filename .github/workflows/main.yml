@@ -10,9 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: make new branch from main
+        id: s1
         env:
           PR_BRANCH: auto-main-${{github.sha}}
+        if: startsWith(github.event.head_commit.message, 'fix')
         run: |
+          echo ${{ github.event }}
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
           git remote update
@@ -20,18 +23,28 @@ jobs:
           git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
-      # - name: Reset promotion branch
-      #   run: |
-      #     git fetch origin main:main
-      #     git reset --hard main
-      #     git checkout main
+          git checkout main
+      - name: Reset promotion branch
+        if: steps.s1.conclusion == 'success'
+        run: |
+          git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
+          git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
+        if: steps.s1.conclusion == 'success'
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: auto-main-${{github.sha}}
-          base: main
+          delete-branch: true
+          title: ${{ github.event.head_commit.message }}
+          body: |
+            This is auto created PR from Hotfix PR( `hotfix` -> `prod` )
+            This branch is **hotfix**, It's submitted to the `main` branch.
+          labels: |
+            Auto created
+            Hotfix
       - name: Check outputs
+        if: steps.s1.conclusion == 'success'
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
