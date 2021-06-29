@@ -13,10 +13,9 @@ jobs:
         id: s1
         env:
           PR_BRANCH: auto-main-${{github.sha}}
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
         if: startsWith(github.event.head_commit.message, 'fix')
         run: |
-          echo $COMMIT_MSG
+          echo ${{ github.event }}
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
           git remote update
@@ -38,6 +37,12 @@ jobs:
           branch: auto-main-${{github.sha}}
           delete-branch: true
           title: ${{ github.event.head_commit.message }}
+          body: |
+            This is auto created PR from Hotfix PR( `hotfix` -> `prod` )
+            This branch is **hotfix**, It's submitted to the `main` branch.
+          labels: |
+            Auto created
+            Hotfix
       - name: Check outputs
         if: steps.s1.conclusion == 'success'
         run: |
