@@ -25,6 +25,7 @@ jobs:
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
+        if: failure()
         run: |
           git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
