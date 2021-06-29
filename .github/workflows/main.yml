@@ -25,18 +25,18 @@ jobs:
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
-        if: ${{ success() }}
+        if: ${{ cancelled() }}
         run: |
           git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
-        if: ${{ success() }}
+        if: ${{ cancelled() }}
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           branch: auto-main-${{github.sha}}
       - name: Check outputs
-        if: ${{ success() }}
+        if: ${{ cancelled() }}
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
