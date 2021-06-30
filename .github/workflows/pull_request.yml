@@ -10,6 +10,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: check pull request
         run: |
-          echo "Pull request ${{ github.context.payload }}"
-          echo "Pull request ${{ github.pull_request }}"
-          echo "Pull request ${{ github.pull_request.title }}"
+          echo "Pull request ${{ github.event_name }}"
