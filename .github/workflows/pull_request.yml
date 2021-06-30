@@ -1,0 +1,12 @@
+name: hotfix pull request
+on:
+  pull_request:
+    branches: [prod]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: check pull request
+        run: echo "Pull request"
