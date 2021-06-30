@@ -12,4 +12,4 @@ jobs:
         run: |
           echo "Pull request ${{ github.context.payload }}"
           echo "Pull request ${{ github.pull_request }}"
-          echo "Pull request ${{ github..pull_request.title }}"
+          echo "Pull request ${{ github.pull_request.title }}"
