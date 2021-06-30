@@ -9,4 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: check pull request
-        run: echo "Pull request"
+        run: |
+          echo "Pull request ${{github.context.payload}}"
+          echo "Pull request ${{github.context.payload.pull_request}}"
+          echo "Pull request ${{github.context.payload.pull_request.title}}"
