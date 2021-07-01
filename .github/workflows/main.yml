@@ -20,9 +20,9 @@ jobs:
           echo 'fetch'
           git fetch --all
           echo 'checkout'
-          git checkout -b "$PR_BRANCH" origin/main
+          git checkout -b $PR_BRANCH origin/main
           echo 'cherry pick'
-          git cherry-pick $(git merge-base "$PR_BRANCH" prod)..prod
+          git cherry-pick $(git merge-base $PR_BRANCH prod)..prod
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
