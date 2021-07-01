@@ -13,7 +13,6 @@ jobs:
         id: s1
         env:
           PR_BRANCH: auto-main-${{github.sha}}
-        if: startsWith(github.event.head_commit.message, 'fix')
         run: |
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
@@ -24,12 +23,10 @@ jobs:
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
-        if: steps.s1.conclusion == 'success'
         run: |
           git fetch origin auto-main-${{github.sha}}:auto-main-${{github.sha}}
           git reset --hard auto-main-${{github.sha}}
       - name: Create Pull Request
-        if: steps.s1.conclusion == 'success'
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
