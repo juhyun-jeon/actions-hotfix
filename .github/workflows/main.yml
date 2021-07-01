@@ -14,16 +14,16 @@ jobs:
         env:
           PR_BRANCH: auto-main-${{github.sha}}
         run: |
-          git config --global user.email "$GITBOT_EMAIL"
-          git config --global user.name "$GITHUB_ACTOR"
-          git remote update
-          echo 'fetch'
-          git fetch --all
-          echo 'checkout'
-          git checkout -b $PR_BRANCH origin/main
-          echo 'cherry pick'
-          git cherry-pick $(git merge-base $PR_BRANCH prod)..prod
-          git push -u origin "$PR_BRANCH"
+          git config --global user.email "$GITBOT_EMAIL" && \
+          git config --global user.name "$GITHUB_ACTOR" && \
+          git remote update && \
+          echo 'fetch' && \
+          git fetch --all && \
+          echo 'checkout' && \
+          git checkout -b "$PR_BRANCH" origin/main && \
+          echo 'cherry pick' && \
+          git cherry-pick $(git merge-base "$PR_BRANCH" prod)..prod && \
+          git push -u origin "$PR_BRANCH" && \
           git checkout main
       - name: Reset promotion branch
         run: |
