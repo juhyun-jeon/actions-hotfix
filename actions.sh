@@ -5,3 +5,4 @@ git checkout -b "$PR_BRANCH" origin/main && \
 git cherry-pick ..prod && \
 git push -u origin "$PR_BRANCH" && \
 git checkout main
+echo "HI"
