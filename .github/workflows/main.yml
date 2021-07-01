@@ -21,7 +21,7 @@ jobs:
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH"
-          git cherry-pick $(git merge-base main prod)..prod
+          git cherry-pick $(git merge-base origin/main prod)..prod
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
