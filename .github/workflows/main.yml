@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: main
       - name: make new branch from main
         id: s1
         env:
@@ -20,7 +18,7 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git remote update
           git fetch --all
-          git checkout -b "$PR_BRANCH"
+          git checkout -b "$PR_BRANCH" origin/main
           git cherry-pick $(git merge-base origin/main prod)..prod
           git push -u origin "$PR_BRANCH"
           git checkout main
