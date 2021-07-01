@@ -20,7 +20,7 @@ jobs:
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH" origin/main
-          git cherry-pick --strategy=recursive -X theirs "$GITHUB_SHA"
+          git cherry-pick --strategy=recursive -X theirs $(git merge-base origin/main prod)..prod
           git push -u origin "$PR_BRANCH"
           git checkout main
       - name: Reset promotion branch
