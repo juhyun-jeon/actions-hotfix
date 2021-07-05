@@ -7,6 +7,6 @@ git remote update && \
 git fetch --all && \
 git checkout main && git reset --hard && \
 git checkout -b "$PR_BRANCH" origin/main && \
-git cherry-pick main..prod  && \
+git cherry-pick main..prod || git add . && git commit -m "hello" && \
 git push -u origin "$PR_BRANCH" && \
 git checkout main
