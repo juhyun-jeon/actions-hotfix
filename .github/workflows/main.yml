@@ -14,7 +14,6 @@ jobs:
         env:
           PR_BRANCH: auto-main-${{github.sha}}
         run: |
-
           git config --global user.email "$GITBOT_EMAIL"
           git config --global user.name "$GITHUB_ACTOR"
           /bin/bash actions.sh
